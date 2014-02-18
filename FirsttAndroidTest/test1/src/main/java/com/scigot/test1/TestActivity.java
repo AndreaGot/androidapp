@@ -34,7 +34,7 @@ public class TestActivity extends ActionBarActivity implements ActionBar.TabList
      */
     SectionsPagerAdapter mSectionsPagerAdapter;
     Button btnCTime;
-    EditText txtCTime;
+    TextView txtCTime;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -44,7 +44,7 @@ public class TestActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
+        setContentView(R.layout.fragment_test);
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -54,21 +54,6 @@ public class TestActivity extends ActionBarActivity implements ActionBar.TabList
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        // When swiping between different sections, select the corresponding
-        // tab. We can also use ActionBar.Tab#select() to do this if we have
-        // a reference to the Tab.
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
-            }
-        }
-
-        );
 
         // For each of the sections in the app, add a tab to the action bar.
         for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
@@ -83,19 +68,19 @@ public class TestActivity extends ActionBarActivity implements ActionBar.TabList
         }
 
         btnCTime = (Button)findViewById(R.id.btnOra);
-        txtCTime = (EditText)findViewById(R.id.txtOra);
-    }
+        txtCTime = (TextView)findViewById(R.id.txtOra);
 
-
-
-    public void onButtonClick()
-    {
-          txtCTime.setText(new Date().toString());
-    }
+        btnCTime.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View arg0) {
+                txtCTime.setText(new Date().toString());
+            }
+       });
+        };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.test, menu);
         return true;
@@ -115,9 +100,7 @@ public class TestActivity extends ActionBarActivity implements ActionBar.TabList
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        // When the given tab is selected, switch to the corresponding page in
-        // the ViewPager.
-        mViewPager.setCurrentItem(tab.getPosition());
+
     }
 
     @Override
@@ -193,7 +176,7 @@ public class TestActivity extends ActionBarActivity implements ActionBar.TabList
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_test, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
